@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Home } from "./components/pages/Home";
+import { Navbar } from "./components/molecules/NavBar";
+import { MovieDetails } from "./components/pages/MovieDetails";
+import { GlobalStyles, ThemeStyled } from "./components/Global.style";
+import { useThemeContext } from "./ThemeProvider";
 
 function App() {
+  const { themeSettings } = useThemeContext();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeStyled theme={{ backgroundColor: themeSettings.background }}>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Navbar title="Movies" />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/MovieDetails/:id" element={<MovieDetails />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeStyled>
   );
 }
 
